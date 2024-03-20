@@ -23,7 +23,7 @@ def main():
     dd.calculate_and_display_average_price(stock_data)
 
     # Analyzes data and notifies the user if the stock price has fluctuated by more than a specified percentage over a period
-    print("Для получения уведомления изменения цены акции в заданом проценте")
+    print("Для получения уведомления изменения цены акции в заданном проценте")
     threshold = input("Введите порог максимальное и минимальное значения цены (например 10) ")
     dd.notify_if_strong_fluctuations(stock_data, threshold)
 
