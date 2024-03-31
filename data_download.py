@@ -24,7 +24,7 @@ def notify_if_strong_fluctuations(data, threshold):
     percent_min_value = data_min_value * (float(threshold) / 100)
     if data_max_value - data_min_value > percent_min_value:
         res = 'Цена акций колебалась более чем на заданный процент за указанный период'
-    return res
+    return print(res)
 
 
 
