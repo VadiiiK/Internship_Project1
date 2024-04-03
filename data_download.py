@@ -26,5 +26,6 @@ def notify_if_strong_fluctuations(data, threshold):
         res = 'Цена акций колебалась более чем на заданный процент за указанный период'
     return print(res)
 
-
+def export_data_to_csv(data, filename):
+    data.to_csv(f'{filename}.csv')
 

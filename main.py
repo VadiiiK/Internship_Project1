@@ -27,6 +27,12 @@ def main():
     threshold = input("Введите порог максимальное и минимальное значения цены (например 10) ")
     dd.notify_if_strong_fluctuations(stock_data, threshold)
 
+    # Export data to CSV
+    print("Для сохранения данных в CSV файл укажите имя")
+    filename = input()
+    dd.export_data_to_csv(stock_data, filename)
+    print(f"Файл сохранен с именем <{filename}>")
+
 
 if __name__ == "__main__":
     main()
