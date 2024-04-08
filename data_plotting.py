@@ -54,7 +54,6 @@ def create_plot_average_closing_price(data, average_closing_price_data, ticker, 
     plt.xlabel("Дата")
     plt.ylabel("Цена")
     plt.legend()
-    plt.show()
 
     if filename is None:
         filename = f"{ticker}_{period}_average_closing_price.png"
