@@ -33,6 +33,10 @@ def main():
     dd.export_data_to_csv(stock_data, filename)
     print(f"Файл сохранен с именем <{filename}>")
 
+    # Plot the average closing price of shares for a given period
+    average_closing_price_data = dd.average_closing_price(stock_data)
+    dplt.create_plot_average_closing_price(stock_data, average_closing_price_data, ticker, period)
+
 
 if __name__ == "__main__":
     main()
