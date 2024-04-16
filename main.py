@@ -34,8 +34,9 @@ def main():
     print(f"Файл сохранен с именем <{filename}>")
 
     # Plot the average closing price of shares for a given period
-    average_closing_price_data = dd.average_closing_price(stock_data)
-    dplt.create_plot_average_closing_price(stock_data, average_closing_price_data, ticker, period)
+    rsi = dd.rsi(stock_data)
+    macd = dd.macd(stock_data)
+    dplt.create_plot_macd_rsi(stock_data, rsi, macd, ticker, period)
 
 
 if __name__ == "__main__":

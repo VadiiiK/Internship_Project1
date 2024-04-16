@@ -31,15 +31,14 @@ def create_and_save_plot(data, ticker, period, filename=None):
     print(f"График сохранен как {filename}")
 
 
-def create_plot_average_closing_price(data, average_closing_price_data, ticker, period, filename=None):
-    plt.figure(figsize=(10, 6))
+def create_plot_macd_rsi(data, rsi, macd, ticker, period, filename=None):
 
     if 'Date' not in data:
         if pd.api.types.is_datetime64_any_dtype(data.index):
             dates = data.index.to_numpy()
             plt.plot(dates, data['Close'].values, label='Close Price')
-            plt.plot(dates, data['Moving_Average'].values, label='Moving Average')
-            plt.axhline(y=average_closing_price_data, color='red', linestyle='--', label='Average closing price')
+            plt.plot(dates, rsi, label='RSI')
+            plt.plot(dates, macd, label='MACD')
         else:
             print("Информация о дате отсутствует или не имеет распознаваемого формата.")
             return
@@ -47,13 +46,15 @@ def create_plot_average_closing_price(data, average_closing_price_data, ticker, 
         if not pd.api.types.is_datetime64_any_dtype(data['Date']):
             data['Date'] = pd.to_datetime(data['Date'])
         plt.plot(data['Date'], data['Close'], label='Close Price')
-        plt.plot(data['Date'], data['Moving_Average'], label='Moving Average')
+        plt.plot(data['Date'], rsi, label='RSI')
+        plt.plot(data['Date'], macd, label='MACD')
         plt.axhline(y=average_closing_price_data, color='red', linestyle='--', label='Average closing price')
 
     plt.title(f"{ticker} Цена акций с течением времени")
     plt.xlabel("Дата")
     plt.ylabel("Цена")
     plt.legend()
+    plt.show()
 
     if filename is None:
         filename = f"{ticker}_{period}_average_closing_price.png"
