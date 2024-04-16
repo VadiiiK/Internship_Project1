@@ -53,7 +53,6 @@ def create_plot_macd_rsi(data, rsi, macd, ticker, period, filename=None):
     plt.xlabel("Дата")
     plt.ylabel("Цена")
     plt.legend()
-    plt.show()
 
     if filename is None:
         filename = f"{ticker}_{period}_average_closing_price.png"
