@@ -48,7 +48,6 @@ def create_plot_macd_rsi(data, rsi, macd, ticker, period, filename=None):
         plt.plot(data['Date'], data['Close'], label='Close Price')
         plt.plot(data['Date'], rsi, label='RSI')
         plt.plot(data['Date'], macd, label='MACD')
-        plt.axhline(y=average_closing_price_data, color='red', linestyle='--', label='Average closing price')
 
     plt.title(f"{ticker} Цена акций с течением времени")
     plt.xlabel("Дата")
