@@ -1,10 +1,30 @@
 import yfinance as yf
 
 
-def fetch_stock_data(ticker, period='1mo'):
+def fetch_stock_data(ticker, period, specific_dates=None):
     stock = yf.Ticker(ticker)
     data = stock.history(period=period)
-    return data
+    if specific_dates is None:
+        return data
+    else:
+        if len(specific_dates) == 2:
+            try:
+                df = data[specific_dates[0]:specific_dates[1]]
+                return df
+            except:
+                print("Указан не коректно даты периода")
+                return data
+        elif len(specific_dates) == 1:
+            print("Так как задана одна, период анализа будет от этой даты")
+            try:
+                df = data[specific_dates[0]:]
+                return df
+            except:
+                print(f"Указана не коректно дата {specific_dates}, не как в примере!")
+                return data
+        else:
+            print("Введеные данные заданны не как в примере")
+            return data
 
 
 def add_moving_average(data, window_size=5):

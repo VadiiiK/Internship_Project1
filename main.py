@@ -4,14 +4,28 @@ import data_plotting as dplt
 
 def main():
     print("Добро пожаловать в инструмент получения и построения графиков биржевых данных.")
-    print("Вот несколько примеров биржевых тикеров, которые вы можете рассмотреть: AAPL (Apple Inc), GOOGL (Alphabet Inc), MSFT (Microsoft Corporation), AMZN (Amazon.com Inc), TSLA (Tesla Inc).")
-    print("Общие периоды времени для данных о запасах включают: 1д, 5д, 1мес, 3мес, 6мес, 1г, 2г, 5г, 10л, с начала года, макс.")
+    print("Вот несколько примеров биржевых тикеров, которые вы можете рассмотреть: AAPL (Apple Inc), "
+          "GOOGL (Alphabet Inc), MSFT (Microsoft Corporation), AMZN (Amazon.com Inc), TSLA (Tesla Inc).")
+    print("Общие периоды времени для данных о запасах включают: "
+          "1д, 5д, 1мес, 3мес, 6мес, 1г, 2г, 5г, 10л, с начала года, макс.")
 
     ticker = input("Введите тикер акции (например, «AAPL» для Apple Inc):»")
     period = input("Введите период для данных (например, '1mo' для одного месяца): ")
 
+    # indicate specific start and end dates for analysis
+    print("Если в заданном периоде нужно указать конкретные даты начала и окончания для анализа, то укажите их")
+    print("Или нажмите 'ENTER' для продолжения без конкретных дат для анализа")
+    specific_dates = input("Введите дату начала и окончания периода "
+                           "(например 2023-10-18:2023-10-23 или 2023-10-18 ), "
+                           "или нажмите 'ENTER': "
+                           )
+    if not specific_dates:
+        specific_dates = None
+    else:
+        specific_dates = specific_dates.split(':')
+
     # Fetch stock data
-    stock_data = dd.fetch_stock_data(ticker, period)
+    stock_data = dd.fetch_stock_data(ticker, period, specific_dates)
 
     # Add moving average to the data
     stock_data = dd.add_moving_average(stock_data)
