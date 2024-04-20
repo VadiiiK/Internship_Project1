@@ -5,6 +5,17 @@ import pandas as pd
 def create_and_save_plot(data, ticker, period, filename=None):
     plt.figure(figsize=(10, 6))
 
+    print("Для применения стиля к графику нажмите 'ПРОБЕЛ' или 'ENTER'")
+    if input() != '':
+        print("Выберите ключ стиля к графику")
+        print('Например: 1')
+        print('Ключи стилей:')
+        keys_style = {}
+        for i in range(len(plt.style.available)):
+            keys_style[i] = plt.style.available[i]
+            print(i, '-', plt.style.available[i])
+        plt.style.use(keys_style[int(input())])
+
     if 'Date' not in data:
         if pd.api.types.is_datetime64_any_dtype(data.index):
             dates = data.index.to_numpy()
