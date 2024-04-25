@@ -84,3 +84,9 @@ def macd(data):
     exp2 = df.y.ewm(span=26, adjust=False).mean()
     macd = exp1 - exp2
     return macd
+
+
+def close_pct(data):
+    data_new = data
+    data_new['Close_pct'] = data_new['Close'].pct_change()*100
+    return data_new

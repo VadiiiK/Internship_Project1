@@ -47,10 +47,34 @@ def main():
     dd.export_data_to_csv(stock_data, filename)
     print(f"Файл сохранен с именем <{filename}>")
 
-    # Plot the average closing price of shares for a given period
+    # Plot the RSI and MACD
     rsi = dd.rsi(stock_data)
     macd = dd.macd(stock_data)
     dplt.create_plot_macd_rsi(stock_data, rsi, macd, ticker, period)
+
+    # Daily return in closing price and standard deviation of closing price
+    print("Так же есть возможность произвести расчет и построить график дневной доходности и "
+          "стандартное отклонение цены закрытия")
+    print("При это необходимости укажите что нужно построить. Например:")
+    print("1 - График дневной доходности цены закрытия")
+    print("2 - Стандартное отклонение цены закрытия")
+    print("3 - Если построить и тот и другой график")
+    print("Или нажмите 'ENTER' для продолжения")
+    choice = input(">>>")
+    if choice == '':
+        pass
+    elif choice == '1':
+        stock_data = dd.close_pct(stock_data)
+        dplt.create_close_pct(stock_data, ticker, period)
+    elif choice == '2':
+        stock_data = dd.close_pct(stock_data)
+        dplt.create_standard_deviation(stock_data, ticker, period)
+    elif choice == '3':
+        stock_data = dd.close_pct(stock_data)
+        dplt.create_close_pct(stock_data, ticker, period)
+        dplt.create_standard_deviation(stock_data, ticker, period)
+    else:
+        print('Указано не верное значение! Нужно 1, 2 или 3!')
 
 
 if __name__ == "__main__":

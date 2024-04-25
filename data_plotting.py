@@ -14,7 +14,11 @@ def create_and_save_plot(data, ticker, period, filename=None):
         for i in range(len(plt.style.available)):
             keys_style[i] = plt.style.available[i]
             print(i, '-', plt.style.available[i])
-        plt.style.use(keys_style[int(input())])
+        try:
+            plt.style.use(keys_style[int(input())])
+        except:
+            print("Ключ указанный вами не как указан в примере!")
+            print("График будет построен без применения стиля")
 
     if 'Date' not in data:
         if pd.api.types.is_datetime64_any_dtype(data.index):
@@ -43,6 +47,7 @@ def create_and_save_plot(data, ticker, period, filename=None):
 
 
 def create_plot_macd_rsi(data, rsi, macd, ticker, period, filename=None):
+    plt.figure(figsize=(10, 6))
 
     if 'Date' not in data:
         if pd.api.types.is_datetime64_any_dtype(data.index):
@@ -67,6 +72,61 @@ def create_plot_macd_rsi(data, rsi, macd, ticker, period, filename=None):
 
     if filename is None:
         filename = f"{ticker}_{period}_average_closing_price.png"
+
+    plt.savefig(filename)
+    print(f"График сохранен как {filename}")
+
+
+def create_close_pct(data, ticker, period, filename=None):
+    plt.figure(figsize=(10, 6))
+
+    if 'Date' not in data:
+        if pd.api.types.is_datetime64_any_dtype(data.index):
+            dates = data.index.to_numpy()
+            plt.plot(dates, data['Close_pct'].values, label='Daily return')
+        else:
+            print("Информация о дате отсутствует или не имеет распознаваемого формата.")
+            return
+    else:
+        if not pd.api.types.is_datetime64_any_dtype(data['Date']):
+            data['Date'] = pd.to_datetime(data['Date'])
+        plt.plot(data['Date'], data['Close_pct'], label='Daily return')
+
+    plt.title(f"{ticker} Дневная доходность в цене закрытия акции")
+    plt.xlabel("Дата")
+    plt.ylabel("Цена")
+    plt.legend()
+
+    if filename is None:
+        filename = f"{ticker}_{period}_daily_return_in_closing_price.png"
+
+    plt.savefig(filename)
+    print(f"График сохранен как {filename}")
+
+
+def create_standard_deviation(data, ticker, period, filename=None):
+    plt.figure(figsize=(10, 6))
+
+    if 'Date' not in data:
+        if pd.api.types.is_datetime64_any_dtype(data.index):
+            plt.plot(data['Close_pct'].rolling(5).std(), label='Standard deviation')
+            plt.plot(data['Close_pct'].rolling(7).mean(), label='Moving average daily return')
+        else:
+            print("Информация о дате отсутствует или не имеет распознаваемого формата.")
+            return
+    else:
+        if not pd.api.types.is_datetime64_any_dtype(data['Date']):
+            data['Date'] = pd.to_datetime(data['Date'])
+        plt.plot(data['Date'], data['Close_pct'].rolling(5).std(), label='Standard deviation')
+        plt.plot(data['Date'], data['Close_pct'].rolling(7).mean(), label='Moving average daily return')
+
+    plt.title(f"{ticker} Стандартное отклонение в цене закрытия акции")
+    plt.xlabel("Дата")
+    plt.ylabel("Цена")
+    plt.legend()
+
+    if filename is None:
+        filename = f"{ticker}_{period}_standard_deviation_of_closing_price.png"
 
     plt.savefig(filename)
     print(f"График сохранен как {filename}")
