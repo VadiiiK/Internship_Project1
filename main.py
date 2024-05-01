@@ -76,6 +76,16 @@ def main():
     else:
         print('Указано не верное значение! Нужно 1, 2 или 3!')
 
+    # Create interactive "plotly" graphs
+    print("Уважаемый мой друг, я также могу построить для тебя интерактивныЙ график с помощью библиотеки 'Plotly' :)")
+    print("Для этого тебе нужно выбрать нажать 'ПРОБЕЛ' или 'ENTER' для завершения")
+    if input() != '':
+        dd.close_pct(stock_data)
+        dplt.create_plotly(stock_data)
+    else:
+        quit()
+    quit()
+
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,10 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import plotly.graph_objs as go
 
 
 def create_and_save_plot(data, ticker, period, filename=None):
+    """The function takes a DataFrame, create and save plot"""
     plt.figure(figsize=(10, 6))
 
     print("Для применения стиля к графику нажмите 'ПРОБЕЛ' или 'ENTER'")
@@ -47,6 +49,7 @@ def create_and_save_plot(data, ticker, period, filename=None):
 
 
 def create_plot_macd_rsi(data, rsi, macd, ticker, period, filename=None):
+    """The function takes a DataFrame, create and save plot MACD, RSI"""
     plt.figure(figsize=(10, 6))
 
     if 'Date' not in data:
@@ -78,6 +81,7 @@ def create_plot_macd_rsi(data, rsi, macd, ticker, period, filename=None):
 
 
 def create_close_pct(data, ticker, period, filename=None):
+    """The function takes a DataFrame, create and save plot close PCT"""
     plt.figure(figsize=(10, 6))
 
     if 'Date' not in data:
@@ -105,6 +109,7 @@ def create_close_pct(data, ticker, period, filename=None):
 
 
 def create_standard_deviation(data, ticker, period, filename=None):
+    """The function takes a DataFrame, create and save plot standard deviation"""
     plt.figure(figsize=(10, 6))
 
     if 'Date' not in data:
@@ -130,3 +135,20 @@ def create_standard_deviation(data, ticker, period, filename=None):
 
     plt.savefig(filename)
     print(f"График сохранен как {filename}")
+
+
+def create_plotly(data):
+    """The function takes a DataFrame and creates an interactive chart using the library 'Plotly'"""
+    dates = data.index.to_numpy()
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=dates, y=data['Close'], mode='lines+markers', name='Close',
+                             marker=dict(color=data['Close_pct'], colorbar=dict(title="Close_pct"))
+                             ))
+
+    fig.add_trace(go.Scatter(x=dates, y=data['Moving_Average'], name='Moving_Average'))
+
+    fig.update_layout(legend_orientation="h",
+                      legend=dict(x=.5, xanchor="center"),
+                      margin=dict(l=0, r=0, t=0, b=0))
+    fig.update_traces(hoverinfo="all", hovertemplate="Дата: %{x}<br>Цена: %{y}")
+    fig.show()

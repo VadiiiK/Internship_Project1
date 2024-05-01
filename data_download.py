@@ -2,6 +2,7 @@ import yfinance as yf
 
 
 def fetch_stock_data(ticker, period, specific_dates=None):
+    """Function for retrieving stock data through the yfinance library"""
     stock = yf.Ticker(ticker)
     data = stock.history(period=period)
     if specific_dates is None:
@@ -28,17 +29,20 @@ def fetch_stock_data(ticker, period, specific_dates=None):
 
 
 def add_moving_average(data, window_size=5):
+    """The function takes add moving average"""
     data = data.fillna(0)
     data['Moving_Average'] = data['Close'].rolling(window=window_size).mean()
     return data
 
 
 def calculate_and_display_average_price(data):
+    """The function takes a DataFrame calculate and display average price"""
     data = data['Close'].mean()
     return print(f'Средняя цена закрытия акций за указанный период равна: {data}')
 
 
 def notify_if_strong_fluctuations(data, threshold):
+    """The function takes a DataFrame and notifies if the fluctuation is above a set threshold"""
     res = None
     data_max_value = data['Close'].max()
     data_min_value = data['Close'].min()
@@ -49,13 +53,12 @@ def notify_if_strong_fluctuations(data, threshold):
 
 
 def export_data_to_csv(data, filename):
+    """The function takes a DataFrame and a file name to save in CSV"""
     data.to_csv(f'{filename}.csv')
 
 
 def rsi(df, periods=14, ema=True):
-    """
-    Возвращает pd.Series с индексом относительной силы.
-    """
+    """The function takes a DataFrame and calculates RSI"""
     close_delta = df['Close'].diff()
     # Делаем две серий: одну для низких закрытий и одну для высоких закрытий
     up = close_delta.clip(lower=0)
@@ -76,6 +79,7 @@ def rsi(df, periods=14, ema=True):
 
 
 def macd(data):
+    """The function takes a DataFrame and calculates MACD"""
     df = data
     df = df[['Close']]
     df.reset_index(level=0, inplace=True)
@@ -87,6 +91,7 @@ def macd(data):
 
 
 def close_pct(data):
+    """The function takes a DataFrame and calculates close PCT"""
     data_new = data
     data_new['Close_pct'] = data_new['Close'].pct_change()*100
     return data_new
